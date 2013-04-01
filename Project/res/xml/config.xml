@@ -56,6 +56,9 @@
     <plugin name="Globalization" value="org.apache.cordova.Globalization"/>
     <plugin name="InAppBrowser" value="org.apache.cordova.InAppBrowser"/>
 
+    <!-- PushPlugin -->
+    <plugin name="PushPlugin" value="com.plugin.GCM.PushPlugin" />
+
     <!-- INTERNET CONNECTION -->
     <plugin name="NetworkStatus" value="org.apache.cordova.NetworkManager" />
 </plugins>
