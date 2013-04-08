@@ -4,66 +4,146 @@ document.addEventListener("deviceready", onDeviceReady, false);
 var jobID;
 var xml_all;
 var detailed_div;
+var image_array=new Array();
+preload([
+                        'css/ikoner/info_blue.png',
+                        'css/ikoner/info_dark.png',
+                        'css/ikoner/jobs_blue.png',
+                        'css/ikoner/jobs_dark.png',
+                        'css/ikoner/settings_blue.png',
+                        'css/ikoner/settings_dark.png',
+                        'css/ikoner/tips_blue.png',
+                        'css/ikoner/tips_dark.png',
+                        'css/images/ajax-loader.gif',
+                        'css/images/filter.png',
+                        'css/images/refresh.png'
 
+                        ]);
+
+function checkConnection() {
+
+if(!navigator.onLine)
+{
+navigator.notification.alert(
+'Du måste vara ansluten till internet för att se denna del av applikationen', // message
+alertDismissed, // callback
+'Ingen internetanslutning', // title
+'OK' // buttonName
+);
+}
+}
+//Om det inte går att hämta xml
+function errorMessage(error)
+{
+navigator.notification.alert(
+'Du måste vara ansluten till internet för att se denna del av applikationen', // message
+alertDismissed, // callback
+'Ingen internetanslutning', // title
+'OK' // buttonName
+);
+}
+function alertDismissed()
+{
+$('#spinner').show();
+}
+
+function preload(arrayOfImages) {
+    $(arrayOfImages).each(function(){
+                          $('<img/>')[0].src = this;
+                          });
+}
 
 $(document).on('pageinit',"body",function()
            {
                 detailed_div=$("div#detailed_job_content ul");
+                
            
            
            });
 
 
-function onDeviceReady() {
-
-    //Get the xml from the web.
-    
-    //Remove the SplashScreen!!
-     navigator.splashscreen.hide();
-
-
-    }
-$(document).on('pageinit', "#jobs", function()
-                  {
+function refresh()
+{
+  var jobs_div = $('div#jobs_content ul#job');
+                  jobs_div.text('');
                   $.ajax({
                          type: "GET",
                          url: "http://cv.skill.se/cv/rss.jsp?format=mtrxml&allads=1&fullad=1",
                          dataType: "xml",
-                         success: parseXml,
-                         timeout:4000,
+                         success: parseXml
                          });
 
-                  
+
                   function parseXml(xml)
                   {
                   xml_all=xml;
-                  //find every Tutorial and print the author
                   $(xml).find("job").each(function()
                                                {  
                                                     var link = $(this).find('applicationMethods link').attr('href');
                                                     var img = $(this).find('logo link').attr('href');
+                                                    image_array.push(img);
                                                     var title = $(this).find('title').text();
                                                     var id = $(this).attr('id');
-                                                    
                                                     var date = $(this).find('pubDate').text();
                                                     var location = $(this).find('location').text();
                                                     var area = $(this).find('area').text();
                                                     var assignment_type = $(this).find('assignmentType').text();
                                                      $('div#jobs_content ul#job').append('<li class="listelement" data-id= "' + id + '" ><a><img src="' + img +'" class="ui-li-thumb"><p class="ui-li-heading">' + title + '</p><p class="ui-li-desc">'+area+','+assignment_type+'<br></br>' +location+', '+date+'</p></a></li>');
-
-
-
-                                                   // $('div#jobs_content ul#job').append('<li class="listelement" data-id= "' + id + '" ><a><img src="' + img +'"class="ui-li-thumb"><p class="ui-li-heading">' + title + '</p></a></li>');
-                        
                                                 });
                   $('div#jobs_content ul#job').listview("refresh");
+                  preload(image_array);
                   
                   $('li.listelement').click(function(){
-                                          detailed_div.text("");
                                           jobID = $(this).data('id');
 
+                                          detailed_div.text('');
+                                          job_id = $(this).data('id');
+                                          var detailed_job = $(xml_all).find("job[id="+job_id+"]");
+                                          var detailed_title = detailed_job.find('title').text();
+                                          var detailed_company = detailed_job.find('company name').text();
+                                          var detailed_area = detailed_job.find('area').text();
+                                          var detailed_assignment_type = detailed_job.find('assignmentType').text();
+                                          var detailed_location = detailed_job.find('location').text();
+                                          var detailed_description = detailed_job.find('description').text();
+                                          var detailed_img = detailed_job.find('logo link').attr('href');
+                                          var detailed_link = detailed_job.find('applicationMethods link').attr('href');
+                                          $('#detailed_job_view div.header h1').html(detailed_company);
+                                          detailed_div.append('<h1 id="job_title">'+detailed_title+'</h1>');
+                                          detailed_div.append('<img src="' + detailed_img +'" id="job_image"></img>');
+
+                                          detailed_div.append('<table>');
+                                          detailed_div.append('<tr>');
+                                          detailed_div.append('<td> Arbetsgivare </td> ');
+                                          detailed_div.append('<td>' +detailed_company+ '</td>');
+                                          detailed_div.append('</tr>');
+                                          detailed_div.append('<tr>');
+                                          detailed_div.append('<td> Uppdragstyp </td>');
+                                          detailed_div.append('<td>' +detailed_assignment_type+ '</td>');
+                                          detailed_div.append('</tr>');
+                                          detailed_div.append('<tr>');
+                                          detailed_div.append('<td> Område </td>');
+                                          detailed_div.append('<td>' +detailed_area+ '</td>');
+                                          detailed_div.append('</tr>');
+                                          detailed_div.append('<tr>');
+                                          detailed_div.append('<td> Ort </td>');
+                                          detailed_div.append('<td>' +detailed_location+ '</td>');
+                                          detailed_div.append('</tr>');
+                                          detailed_div.append('<tr>');
+                                          detailed_div.append('<td> Platser </td>');
+                                          detailed_div.append('<td> 2 </td>');
+                                          detailed_div.append('</tr>');
+                                          detailed_div.append('<tr>');
+                                          detailed_div.append('<td> Sista ansökningsdagen </td>');
+                                          detailed_div.append('<td> 2013-06-28 </td>');
+                                          detailed_div.append('</tr>');
+                                          detailed_div.append('</table>');
+                                          detailed_div.append('<hr/>');
+
+                                          detailed_div.append('<div id="description">'+detailed_description+'</div>');
+                                          detailed_div.append('<hr/>');
+                                          detailed_div.append('<a data-role="button" id="job_link">Ansök</a>');
+
                                           $.mobile.changePage("#detailed_job_view",{ transition: "none"});
-                                           //$.mobile.changePage("#detailed_job_view", true, true);
                                            
                                            
                                 });
@@ -71,30 +151,58 @@ $(document).on('pageinit', "#jobs", function()
                   
                   
       }
+
+
+}
+
+
+
+function onDeviceReady() {
+
+    //checkConnection();
+    //Get the xml from the web.
+    
+    //Remove the SplashScreen!!
+     navigator.splashscreen.hide();
+
+     
+}
+$(document).on('pagebeforeshow', "#jobs", function()
+                  {
+                    preload(image_array);
+                     if(!xml_all)
+                  {
+                  refresh();
+                  }
                   
 
                   
 });
 
-$(document).on('pageshow', '#detailed_job_view', function()
+$(document).on('pagebeforeshow', '#detailed_job_view', function()
 {
-  var job = $(xml_all).find("job[id="+jobID+"]");
-  var title = job.find('title').text();
-  var description = job.find('description').text();
-  var link = job.find('applicationMethods link').attr('href');
-  var company = job.find('company name').text();
-  $('#detailed_job_view div.header h1').text(company);
-  //$('#detailed_job_view div.header').append("<h1>"+company+"</h1>");
-  detailed_div.append("<h3>"+title+"</h3>");
-  detailed_div.append("<p>"+description+"</p>");
-  detailed_div.append('<button id="job_link">Ansök</button>');
 
-  $('button#job_link').live("click", function()
+
+  $('#detailed_job_view').trigger("create");
+
+  $('a#job_link').live("click", function()
     {
         ref = window.open(link,'_blank', 'location=no');
     });
-
-    $("div#detailed_job_content").iscrollview("refresh");                       
+    $("div#detailed_job_content").iscrollview("refresh");
+    $("div#detailed_job_content").iscrollview("scrollTo", 0, 0, 0, false);
+    
+    $('div#description a').click(function(event)
+                                            {
+                                            
+                                            var anchor_text = $(this).text();
+                                            var charExists = (anchor_text.indexOf('@') >=0);
+                                            if(!charExists)
+                                            {
+                                                event.preventDefault();
+                                            }
+                                            
+                                            });                     
                            
 });
 
@@ -199,12 +307,11 @@ tokenHandler:function(msg) {
     //alert(msg);
 },
 errorHandler:function(error) {
-    console.log("Error Handler  " + error);
-    alert(error);
+   
 },
     // result contains any message sent from the plugin call
 successHandler: function(result) {
-    alert('Success! Result = '+result)
+    
 },
     // Update DOM on a Received Event
 receivedEvent: function(id) {
@@ -262,15 +369,15 @@ onNotificationGCM: function(e) {
               url: 'http://pervelander.se/examensarbete/post_prenum_android.php',
               success: function(data){
                  console.log(data);
-                 alert('Your comment was successfully added');
+                 
               },
               error: function(){
                  console.log(data);
-                 alert('There was an error adding your comment');
+                 
               }
           });
               
-              alert(e.regid);
+              //alert(e.regid);
                 // Your GCM push server needs to know the regID before it can push to this device
                 // here is where you might want to send it the regID for later use.
                 //alert('registration id = '+e.regid);
@@ -280,15 +387,15 @@ onNotificationGCM: function(e) {
         case 'message':
             // this is the actual push notification. its format depends on the data model
             // of the intermediary push server which must also be reflected in GCMIntentService.java
-            alert('message = '+e.message+' msgcnt = '+e.msgcnt);
+            
             break;
             
         case 'error':
-            alert('GCM error = '+e.msg);
+            
             break;
             
         default:
-            alert('An unknown GCM event has occurred');
+            
             break;
     }
 }};

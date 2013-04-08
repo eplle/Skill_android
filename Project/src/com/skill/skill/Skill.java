@@ -19,14 +19,17 @@
 
 package com.skill.skill;
 
-import android.app.AlertDialog;
+
 import android.content.Context;
-import android.content.DialogInterface;
+import android.content.Intent;
+
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 
-import android.util.Log;
+
 
 import org.apache.cordova.*;
 
@@ -49,41 +52,32 @@ public class Skill extends DroidGap
         super.onCreate(savedInstanceState);
         super.setIntegerProperty("splashscreen", R.drawable.skill_big);
         
-        if(isOnline())
-        {
+    
         	super.loadUrl(Config.getStartUrl(), 10000);
-        }
-        else
-        {
-        try {
-        	//SKAPA EN ANNAN F…R IOS!!!!!
-        	
-            AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-            alertDialog.setTitle("Skill");
-            alertDialog.setMessage("Hittade ingen internetanslutning");
-            
-            //LŠgg till skills icon??
-           // alertDialog.setIcon(R.drawable.alerticon);
-            alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
-               public void onClick(DialogInterface dialog, int which) {
-                 finish();
-
-               }
-            });
-
-            alertDialog.show();
-            }
-        catch(Exception e){
-                
-            }
-        }
-        
-        
-
-
     }
-
   
+
+  @Override
+public boolean onCreateOptionsMenu(Menu menu) {
+    getMenuInflater().inflate(R.menu.menu, menu);
+    return true;
+}
+
+@Override
+public boolean onOptionsItemSelected(MenuItem item) {
+    // Handle item selection
+    switch (item.getItemId()) {
+    case R.id.refresh:
+//
+    this.appView.loadUrl("javascript:refresh()");
+        //this.startActivity(new Intent(android.provider.Settings.ACTION_SETTINGS));
+        return true;
+    case R.id.filter:
+        return true;
+    default:
+        return super.onOptionsItemSelected(item);
+    }
+}
     
     
 }

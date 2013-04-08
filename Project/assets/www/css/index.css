@@ -69,6 +69,7 @@ body {
 }
 
 h1 {
+    font-family: RotisSansSerif;
     font-size:24px;
     font-weight:normal;
     margin:0px;
@@ -106,6 +107,12 @@ h1 {
     from { opacity: 1.0; }
     50% { opacity: 0.4; }
     to { opacity: 1.0; }
+}
+
+@font-face
+{
+font-family: RotisSansSerif;
+src: url('fonter/RotisSansSerif55.ttf');
 }
  
 .blink {
@@ -257,13 +264,75 @@ font-size:9px;
 }
 
 #detailed_job_content ul{
-    padding:0;
+    padding:0px;
 }
 
-#about #about_content ul{
-    padding:0;
+#detailed_job_content div#description h1 {
+
+font-family:RotisSansSerif, Helvetica, Arial, Sans-Serif;
+font-size:20px;
+text-align:left;
+margin-bottom:0px;
+    }
+    
+    #detailed_job_content div#description p{
+
+font-family:Helvetica, Arial, Sans-Serif;
+margin-top:2px;
+margin-bottom:15px;
+    }
+
+    #detailed_job_content h1#job_title {
+
+font-family:RotisSansSerif, Helvetica, Arial, Sans-Serif;
+font-size:25px;
+text-align:left;
+
+    }
+    
+    #detailed_job_content img#job_image{
+    margin-top:5px;
+    margin-bottom:5px;
+    max-width:50%;
+    }
+
+#detailed_job_content tr{
 }
 
-#tips #tips_content ul{
-    padding:0;
+#detailed_job_content td{
+padding-right:10px;
+font-weight:bold;
 }
+
+/*HEIGHT: MAX 8px*/
+hr{
+margin-top:15px;
+margin-bottom:15px;
+height: 5px;
+background:url('images/footer.png') repeat-x top left;
+border: 0;
+}
+
+
+.spinner {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-left: -50px; /* half width of the spinner gif */
+    margin-top: -50px; /* half height of the spinner gif */
+    text-align:center;
+    z-index:1234;
+    overflow: auto;
+    width: 100px; /* width of the spinner gif */
+    height: 102px; /*hight of the spinner gif +2px to fix IE8 issue */
+}
+
+#settings ul{
+    padding: 0;
+
+
+}
+
+
+
+

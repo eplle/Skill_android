@@ -5,22 +5,44 @@
         <meta name="format-detection" content="telephone=no" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 
-        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.0/jquery.mobile-1.3.0.min.css" />
+        <link rel="stylesheet" href="css/jquery.mobile-1.3.0.min.css" />
         <link rel="stylesheet" type="text/css" href="css/jquery.mobile.iscrollview-pull.css" />
         <link rel="stylesheet" type="text/css" href="css/jquery.mobile.iscrollview.css" />
+        <link rel="stylesheet" type="text/css" media="all" href="http://fast.fonts.com/cssapi/83daf61a-74b6-42ac-b4f4-3d4c794ae44a.css">
         <link rel="stylesheet" type="text/css" href="css/index.css" />
+
         
-        
-        <script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+
+      
+        <script src="js/jquery-1.8.2.min.js"></script>
         <script src="http://code.jquery.com/mobile/1.3.0/jquery.mobile-1.3.0.min.js"></script>
         <script type="text/javascript" charset="utf-8" src="cordova-2.5.0.js"></script>
-   
+  
         <!--ISCROLL-->
         <script src="js/iscroll.js"></script>
         <script src="js/jquery.mobile.iscrollview.js"></script>
 
+        <!--pushplugin -->
+        <script type="text/javascript" charset="utf-8" src="js/PushNotification.js"></script>
 
         <script src="js/index.js"></script>
+
+        <div id="spinner" class="spinner" style="display:none;">
+        <img id="img-spinner" src="css/images/ajax-loader.gif" alt="Loading"/>
+        </div>
+
+        <script type="text/javascript">
+$(document).ready(function(){
+    $("#spinner").bind("ajaxSend", function() {
+        $(this).show();
+    }).bind("ajaxStop", function() {
+        $(this).hide();
+    }).bind("ajaxError", function() {
+        $(this).hide();
+    });
+ 
+     });
+</script>
 
         <title>Skill</title>
     </head>
@@ -67,9 +89,10 @@
                 <a href="#" data-rel="back">Bakåt</a>
                 <h1></h1>
                 
+                
             </div><!-- /header -->
             
-            <div data-role="content" id="detailed_job_content" class="wrapper" data-iscroll>
+            <div data-role="content" id="detailed_job_content" class="detailed_wrapper" data-iscroll="">
 
                 <ul>
 
@@ -107,7 +130,59 @@
                 <h1>Inst&#228;llningar</h1>
             </div><!-- /header -->
             
-            <div data-role="content" class="wrapper">
+            <div data-role="content" class="wrapper" data-iscroll>
+                <ul>
+                <fieldset data-role="controlgroup">
+                    <legend>Placering: </legend>
+                    <input type="checkbox" name="checkbox-1a" id="checkbox-1a">
+                    <label for="checkbox-1a">Östergötlands län</label>
+                    <input type="checkbox" name="checkbox-2a" id="checkbox-2a">
+                    <label for="checkbox-2a">Jönköpings län</label>
+                    <input type="checkbox" name="checkbox-3a" id="checkbox-3a">
+                    <label for="checkbox-3a">Stockholms län</label>
+                    <input type="checkbox" name="checkbox-4a" id="checkbox-4a">
+                    <label for="checkbox-4a">Örebro län</label>
+                    <input type="checkbox" name="checkbox-5a" id="checkbox-5a">
+                    <label for="checkbox-5a">Västra Götalands län</label>
+                    <input type="checkbox" name="checkbox-6a" id="checkbox-6a">
+                    <label for="checkbox-6a">Övriga</label>
+                </fieldset>
+
+                <fieldset data-role="controlgroup">
+                    <legend>Område:</legend>
+                    <input type="checkbox" name="checkbox-1b" id="checkbox-1b">
+                    <label for="checkbox-1b">Marknad/kommunikation</label>
+                    <input type="checkbox" name="checkbox-2b" id="checkbox-2b">
+                    <label for="checkbox-2b">Teknik/data</label>
+                    <input type="checkbox" name="checkbox-3b" id="checkbox-3b">
+                    <label for="checkbox-3b">Ekonomi/juridik</label>
+                    <input type="checkbox" name="checkbox-4b" id="checkbox-4b">
+                    <label for="checkbox-4b">Samhälle/humaniora/beteendevetenskap</label>
+                    <input type="checkbox" name="checkbox-5b" id="checkbox-5b">
+                    <label for="checkbox-5b">Sommarjobb</label>
+                    <input type="checkbox" name="checkbox-6b" id="checkbox-6b">
+                    <label for="checkbox-6b">Lärare/pedagogik</label>
+                    <input type="checkbox" name="checkbox-7b" id="checkbox-7b">
+                    <label for="checkbox-7b">Matematik/statistik</label>
+                    <input type="checkbox" name="checkbox-8b" id="checkbox-8b">
+                    <label for="checkbox-8b">Medicin/vård</label>
+
+                </fieldset>
+                <fieldset data-role="controlgroup">
+                    <legend>Uppdragstyp:</legend>
+                    <input type="checkbox" name="checkbox-1c" id="checkbox-1c">
+                    <label for="checkbox-1c">Hyrrekrytering</label>
+                    <input type="checkbox" name="checkbox-2c" id="checkbox-2c">
+                    <label for="checkbox-2c">Rekrytering</label>
+                    <input type="checkbox" name="checkbox-3c" id="checkbox-3c">
+                    <label for="checkbox-3c">Sommarjobb</label>
+                    <input type="checkbox" name="checkbox-4c" id="checkbox-4c">
+                    <label for="checkbox-4c">Uthyrning</label>
+                    <input type="checkbox" name="checkbox-5c" id="checkbox-5c">
+                    <label for="checkbox-5c">Undersökning</label>
+
+                </fieldset>
+            </ul>
             </div>
 
 
