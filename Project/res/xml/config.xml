@@ -35,6 +35,7 @@
     <log level="DEBUG"/>
     <preference name="useBrowserHistory" value="true" />
     <preference name="exit-on-suspend" value="false" />
+    
     <preference name="orientation" value="portrait" />
 <plugins>
     <plugin name="App" value="org.apache.cordova.App"/>
@@ -56,6 +57,7 @@
     <plugin name="Echo" value="org.apache.cordova.Echo" />
     <plugin name="Globalization" value="org.apache.cordova.Globalization"/>
     <plugin name="InAppBrowser" value="org.apache.cordova.InAppBrowser"/>
+    <plugin name="Storage" value="org.apache.cordova.Storage" />
 
     <!-- PushPlugin -->
     <plugin name="PushPlugin" value="com.plugin.GCM.PushPlugin" />

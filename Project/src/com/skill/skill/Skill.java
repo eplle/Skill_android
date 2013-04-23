@@ -52,8 +52,10 @@ public class Skill extends DroidGap
         super.onCreate(savedInstanceState);
         super.setIntegerProperty("splashscreen", R.drawable.skill_big);
         
-    
-        	super.loadUrl(Config.getStartUrl(), 10000);
+
+        
+
+          super.loadUrl(Config.getStartUrl(), 60000);
     }
   
 
