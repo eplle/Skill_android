@@ -53,17 +53,19 @@
     <plugin name="FileTransfer" value="org.apache.cordova.FileTransfer"/>
     <plugin name="Capture" value="org.apache.cordova.Capture"/>
     <plugin name="Battery" value="org.apache.cordova.BatteryListener"/>
-    <plugin name="SplashScreen" value="org.apache.cordova.SplashScreen"/>
+    <plugin name="loadingDialog" value="org.apache.cordova.loadingDialog"/>
     <plugin name="Echo" value="org.apache.cordova.Echo" />
     <plugin name="Globalization" value="org.apache.cordova.Globalization"/>
     <plugin name="InAppBrowser" value="org.apache.cordova.InAppBrowser"/>
     <plugin name="Storage" value="org.apache.cordova.Storage" />
 
+
+
+
+
     <!-- PushPlugin -->
     <plugin name="PushPlugin" value="com.plugin.GCM.PushPlugin" />
 
-    <!-- INTERNET CONNECTION -->
-    <plugin name="NetworkStatus" value="org.apache.cordova.NetworkManager" />
 </plugins>
 </cordova>
 

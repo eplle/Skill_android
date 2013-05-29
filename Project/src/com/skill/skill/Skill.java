@@ -28,8 +28,7 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-
-
+import android.content.DialogInterface;
 
 import org.apache.cordova.*;
 
@@ -50,36 +49,14 @@ public class Skill extends DroidGap
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        super.setIntegerProperty("splashscreen", R.drawable.skill_big);
+        //super.setIntegerProperty("splashscreen", R.drawable.skill_big);
+    super.setStringProperty("loadingDialog", "Title, Starting your app...");
         
+          //super.setIntegerProperty("loadUrlTimeoutValue", 70000);
+          super.loadUrl(Config.getStartUrl(),2000);
+          
 
-        
-
-          super.loadUrl(Config.getStartUrl(), 60000);
     }
-  
-
-  @Override
-public boolean onCreateOptionsMenu(Menu menu) {
-    getMenuInflater().inflate(R.menu.menu, menu);
-    return true;
-}
-
-@Override
-public boolean onOptionsItemSelected(MenuItem item) {
-    // Handle item selection
-    switch (item.getItemId()) {
-    case R.id.refresh:
-//
-    this.appView.loadUrl("javascript:refresh()");
-        //this.startActivity(new Intent(android.provider.Settings.ACTION_SETTINGS));
-        return true;
-    case R.id.filter:
-        return true;
-    default:
-        return super.onOptionsItemSelected(item);
-    }
-}
     
     
 }

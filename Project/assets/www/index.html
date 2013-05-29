@@ -1,22 +1,28 @@
 <!DOCTYPE html>
 <html>
     <head>
+
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="format-detection" content="telephone=no" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 
+        <script type="text/javascript" charset="utf-8" src="js/cordova-2.5.0.js"></script>
+        <script type="text/javascript" charset="utf-8" src="js/WaitingDialog.js"></script>
+
         <link rel="stylesheet" href="css/jquery.mobile-1.3.0.min.css" />
         <link rel="stylesheet" type="text/css" href="css/jquery.mobile.iscrollview-pull.css" />
         <link rel="stylesheet" type="text/css" href="css/jquery.mobile.iscrollview.css" />
-        <link rel="stylesheet" type="text/css" media="all" href="http://fast.fonts.com/cssapi/83daf61a-74b6-42ac-b4f4-3d4c794ae44a.css">
+        <link rel="stylesheet" type="text/css" media="all" href="http://fast.fonts.com/cssapi/83daf61a-74b6-42ac-b4f4-3d4c794ae44a.css"/>
         <link rel="stylesheet" type="text/css" href="css/index.css" />
 
+        <div id="spinner" class="spinner">
+        <img id="img-spinner" src="css/images/ajax-loader.gif" alt="Loading"/>
+        </div>
+       
+         <script src="js/jquery-1.9.1.min.js"></script>
+        <script src="js/jquery.mobile-1.3.0.js"></script>
         
-
-      
-        <script src="js/jquery-1.8.2.min.js"></script>
-        <script src="http://code.jquery.com/mobile/1.3.0/jquery.mobile-1.3.0.min.js"></script>
-        <script type="text/javascript" charset="utf-8" src="cordova-2.5.0.js"></script>
+        
   
         <!--ISCROLL-->
         <script src="js/iscroll.js"></script>
@@ -24,30 +30,33 @@
 
         <!--pushplugin -->
         <script type="text/javascript" charset="utf-8" src="js/PushNotification.js"></script>
-
-        <script src="js/index.js"></script>
-        <script type="text/javascript" charset="utf-8" src="http://pervelander.se/examensarbete/test/script.js"></script>
-
-        <div id="spinner" class="spinner" style="display:none;">
-        <img id="img-spinner" src="css/images/ajax-loader.gif" alt="Loading"/>
-        </div>
+        <!--energize.js -->
+        <script type="text/javascript" charset="utf-8" src="js/energize-min.js"></script>
+        <script type="text/javascript" charset="utf-8" src="js/index.js"></script>
 
         <script type="text/javascript">
-$(document).ready(function(){
-    $("#spinner").bind("ajaxSend", function() {
-        $(this).show();
-    }).bind("ajaxStop", function() {
-        $(this).hide();
-    }).bind("ajaxError", function() {
-        $(this).hide();
-    });
- 
-     });
-</script>
+        $(document).ready(function(){
+            $("#spinner").bind("ajaxSend", function() {
+                $(this).show();
+            }).bind("ajaxStop", function() {
+                $(this).hide();
+            }).bind("ajaxError", function() {
+                $(this).hide();
+            });
+         
+             });
+
+        </script>
+
+
 
         <title>Skill</title>
     </head>
     <body>
+
+<div data-role="page" id="start_up">
+    <!--<img src="css/images/ajax-loader.gif"/>-->
+</div>
 
         <!-- JOBS PAGE STARTS HERE -->
          <div data-role="page" id="jobs">
@@ -57,7 +66,8 @@ $(document).ready(function(){
             </div><!-- /header -->
             
             <div data-role="content" id="jobs_content" class="wrapper" data-iscroll>
-                    <ul data-role="listview" id="job">
+                <a data-role="button" data-icon="refresh" id="refresh_jobs">Uppdatera</a>
+                    <ul data-role="listview" id="job_ul">
                         
                     </ul>
             </div>
@@ -72,9 +82,9 @@ $(document).ready(function(){
 
 
                         <li><a href="#" id="jobs_tab" data-transition="none" data-icon="custom" class="ui-btn-active ui-state-persist">Lediga jobb</a></li>
-                        <li><a href="#settings" id="settings_tab" data-transition="none" data-icon="custom">Inst&#228;llningar</a></li>
-                        <li><a href="#about" id="info_tab" data-transition="none" data-icon="custom">Om oss</a></li>
-                        <li><a href="#tips" id="tips_tab" data-transition="none" data-icon="custom">Tips</a></li>
+                        <li><a href="#settings" id="settings_tab" data-prefetch="true" data-transition="none" data-icon="custom">Inst&#228;llningar</a></li>
+                        <li><a href="#about" id="info_tab" data-prefetch="true" data-transition="none" data-icon="custom">Om oss</a></li>
+                        <li><a href="#tips" id="tips_tab" data-prefetch="true" data-transition="none" data-icon="custom">Tips</a></li>
                     </ul>
                 </div>
             </div><!-- /footer -->
@@ -87,8 +97,8 @@ $(document).ready(function(){
     <div data-role="page" id="detailed_job_view">
             
             <div class="header" data-role="header" data-position="fixed" data-tap-toggle="false">
-                <a href="#" data-rel="back">Bakåt</a>
-                <h1></h1>
+                
+                <h1 id="company_name"></h1>
                 
                 
             </div><!-- /header -->
@@ -111,9 +121,9 @@ $(document).ready(function(){
 
 
                         <li><a href="#" id="jobs_tab" data-transition="none" data-icon="custom" class="ui-btn-active ui-state-persist">Lediga jobb</a></li>
-                        <li><a href="#settings" id="settings_tab" data-transition="none" data-icon="custom">Inst&#228;llningar</a></li>
-                        <li><a href="#about" id="info_tab" data-transition="none" data-icon="custom">Om oss</a></li>
-                        <li><a href="#tips" id="tips_tab" data-transition="none" data-icon="custom">Tips</a></li>
+                        <li><a href="#settings" id="settings_tab" data-prefetch="true" data-transition="none" data-icon="custom">Inst&#228;llningar</a></li>
+                        <li><a href="#about" id="info_tab" data-prefetch="true" data-transition="none" data-icon="custom">Om oss</a></li>
+                        <li><a href="#tips" id="tips_tab" data-prefetch="true" data-transition="none" data-icon="custom">Tips</a></li>
                     </ul>
                 </div>
             </div>
@@ -131,32 +141,33 @@ $(document).ready(function(){
                 <h1>Inst&#228;llningar</h1>
             </div><!-- /header -->
             
-            <div data-role="content" class="wrapper" data-iscroll>
+            <div id="settings_content" data-role="content" class="wrapper" data-iscroll>
                 <ul>
 
-                    
-                    <label for="slider">Pushnotiser</label>
-                    <select name="slider" id="slider" data-role="slider">
-                        <option value="off">Av</option>
-                        <option value="on" selected>På</option>
-                    </select>
+                    <div class="slider_div">
+                        <label for="slider">Pushnotiser</label>
+                        <select name="slider" id="slider" data-role="slider">
+                            <option value="off">Av</option>
+                            <option value="on" selected>På</option>
+                        </select>
+                    </div>
 
                     <hr/>
                    <div id="toggle_push">
                     <div id="placement">
                         <fieldset data-role="controlgroup">
                             <legend>Placering: </legend>
-                            <input type="checkbox" class="checkbox_group" name="checkbox-1a" id="checkbox-1a" value="Östergötlands län">
+                            <input type="checkbox" class="checkbox_group" name="Östergötlands län" id="checkbox-1a" value="Östergötlands län"/>
                             <label for="checkbox-1a">Östergötlands län</label>
-                            <input type="checkbox" class="checkbox_group" name="checkbox-2a" id="checkbox-2a" value="Jönköpings län">
+                            <input type="checkbox" class="checkbox_group" name="Jönköpings län" id="checkbox-2a" value="Jönköpings län"/>
                             <label for="checkbox-2a">Jönköpings län</label>
-                            <input type="checkbox" class="checkbox_group" name="checkbox-3a" id="checkbox-3a" value="Stockholms län">
+                            <input type="checkbox" class="checkbox_group" name="Stockholms län" id="checkbox-3a" value="Stockholms län"/>
                             <label for="checkbox-3a">Stockholms län</label>
-                            <input type="checkbox" class="checkbox_group" name="checkbox-4a" id="checkbox-4a" value="Örebro län">
+                            <input type="checkbox" class="checkbox_group" name="Örebro län" id="checkbox-4a" value="Örebro län"/>
                             <label for="checkbox-4a">Örebro län</label>
-                            <input type="checkbox" class="checkbox_group" name="checkbox-5a" id="checkbox-5a" value="Västra Götalands län">
+                            <input type="checkbox" class="checkbox_group" name="Västra Götalands län" id="checkbox-5a" value="Västra Götalands län"/>
                             <label for="checkbox-5a">Västra Götalands län</label>
-                            <input type="checkbox" class="checkbox_group" name="checkbox-6a" id="checkbox-6a" value="Övriga">
+                            <input type="checkbox" class="checkbox_group" name="Övriga" id="checkbox-6a" value="Övriga"/>
                             <label for="checkbox-6a">Övriga</label>
                         </fieldset>
                         </div>
@@ -164,21 +175,21 @@ $(document).ready(function(){
                         <div id="area">
                         <fieldset data-role="controlgroup">
                             <legend>Område:</legend>
-                            <input type="checkbox" class="checkbox_group" name="checkbox-1b" id="checkbox-1b" value="Marknad/kommunikation">
+                            <input type="checkbox" class="checkbox_group" name="Marknad/kommunikation" id="checkbox-1b" value="Marknad/kommunikation"/>
                             <label for="checkbox-1b">Marknad/kommunikation</label>
-                            <input type="checkbox" class="checkbox_group" name="checkbox-2b" id="checkbox-2b" value="Teknik/data">
+                            <input type="checkbox" class="checkbox_group" name="Teknik/data" id="checkbox-2b" value="Teknik/data"/>
                             <label for="checkbox-2b">Teknik/data</label>
-                            <input type="checkbox" class="checkbox_group" name="checkbox-3b" id="checkbox-3b" value="Ekonomi/juridik">
+                            <input type="checkbox" class="checkbox_group" name="Ekonomi/juridik" id="checkbox-3b" value="Ekonomi/juridik"/>
                             <label for="checkbox-3b">Ekonomi/juridik</label>
-                            <input type="checkbox" class="checkbox_group" name="checkbox-4b" id="checkbox-4b" value="Samhälle/humaniora/beteendevetenskap">
+                            <input type="checkbox" class="checkbox_group" name="Samhälle/humaniora/beteendevetenskap" id="checkbox-4b" value="Samhälle/humaniora/beteendevetenskap"/>
                             <label for="checkbox-4b">Samhälle/humaniora/beteendevetenskap</label>
-                            <input type="checkbox" class="checkbox_group" name="checkbox-5b" id="checkbox-5b" value="Sommarjobb">
+                            <input type="checkbox" class="checkbox_group" name="Sommarjobb" id="checkbox-5b" value="Sommarjobb"/>
                             <label for="checkbox-5b">Sommarjobb</label>
-                            <input type="checkbox" class="checkbox_group" name="checkbox-6b" id="checkbox-6b" value="Lärare/pedagogik">
+                            <input type="checkbox" class="checkbox_group" name="Lärare/pedagogik" id="checkbox-6b" value="Lärare/pedagogik"/>
                             <label for="checkbox-6b">Lärare/pedagogik</label>
-                            <input type="checkbox" class="checkbox_group" name="checkbox-7b" id="checkbox-7b" value="Matematik/statistik">
+                            <input type="checkbox" class="checkbox_group" name="Matematik/statistik" id="checkbox-7b" value="Matematik/statistik"/>
                             <label for="checkbox-7b">Matematik/statistik</label>
-                            <input type="checkbox" class="checkbox_group" name="checkbox-8b" id="checkbox-8b" value="Medicin/vård">
+                            <input type="checkbox" class="checkbox_group" name="Medicin/vård" id="checkbox-8b" value="Medicin/vård"/>
                             <label for="checkbox-8b">Medicin/vård</label>
                         </fieldset>
                         </div>
@@ -187,15 +198,15 @@ $(document).ready(function(){
                         <div id="assignment_type">
                         <fieldset data-role="controlgroup">
                             <legend>Uppdragstyp:</legend>
-                            <input type="checkbox" class="checkbox_group" name="checkbox-1c" id="checkbox-1c" value="Hyrrekrytering">
+                            <input type="checkbox" class="checkbox_group" name="Hyrrekrytering" id="checkbox-1c" value="Hyrrekrytering">
                             <label for="checkbox-1c">Hyrrekrytering</label>
-                            <input type="checkbox" class="checkbox_group" name="checkbox-2c" id="checkbox-2c" value="Rekrytering">
+                            <input type="checkbox" class="checkbox_group" name="Rekrytering" id="checkbox-2c" value="Rekrytering">
                             <label for="checkbox-2c">Rekrytering</label>
-                            <input type="checkbox" class="checkbox_group" name="checkbox-3c" id="checkbox-3c" value="Sommarjobb">
+                            <input type="checkbox" class="checkbox_group" name="Sommarjobb" id="checkbox-3c" value="Sommarjobb">
                             <label for="checkbox-3c">Sommarjobb</label>
-                            <input type="checkbox" class="checkbox_group" name="checkbox-4c" id="checkbox-4c" value="Uthyrning">
+                            <input type="checkbox" class="checkbox_group" name="Uthyrning" id="checkbox-4c" value="Uthyrning">
                             <label for="checkbox-4c">Uthyrning</label>
-                            <input type="checkbox" class="checkbox_group" name="checkbox-5c" id="checkbox-5c" value="Undersökning">
+                            <input type="checkbox" class="checkbox_group" name="Undersökning" id="checkbox-5c" value="Undersökning">
                             <label for="checkbox-5c">Undersökning</label>
 
                         </fieldset>
@@ -220,10 +231,10 @@ $(document).ready(function(){
                 <div data-role="navbar">
                     <ul>
                     <!-- For iOS add the following to each <a>-tag: data-transition="slide" data-direction="reverse" -->
-                        <li><a href="#jobs" id="jobs_tab" data-transition="none" data-icon="custom">Lediga jobb</a></li>
-                        <li><a href="#" id="settings_tab" data-transition="none" data-icon="custom"  class="ui-btn-active ui-state-persist">Inst&#228;llningar</a></li>
-                        <li><a href="#about" id="info_tab" data-transition="none" data-icon="custom">Om oss</a></li>
-                        <li><a href="#tips" id="tips_tab" data-transition="none" data-icon="custom">Tips</a></li>
+                        <li><a href="#jobs" id="jobs_tab" data-prefetch="true" data-transition="none" data-icon="custom">Lediga jobb</a></li>
+                        <li><a href="#" id="settings_tab" data-prefetch="true" data-transition="none" data-icon="custom"  class="ui-btn-active ui-state-persist">Inst&#228;llningar</a></li>
+                        <li><a href="#about" id="info_tab" data-prefetch="true" data-transition="none" data-icon="custom">Om oss</a></li>
+                        <li><a href="#tips" id="tips_tab" data-prefetch="true" data-transition="none" data-icon="custom">Tips</a></li>
                     </ul>
                 </div>
             </div><!-- /footer -->
@@ -241,9 +252,13 @@ $(document).ready(function(){
             </div><!-- /header -->
             
             <div data-role="content" class="wrapper" id="about_content" data-iscroll>
-
+                <a data-role="button" data-icon="refresh" id="refresh_about">Uppdatera</a>
                 <ul>
                     
+                    <div id="about_text"></div>
+
+                    <div id="about_staff"></div>
+
                 </ul>
 
             </div>
@@ -255,10 +270,10 @@ $(document).ready(function(){
                 <div data-role="navbar">
                     <ul>
                     <!-- For iOS add the following to each <a>-tag: data-transition="slide" data-direction="reverse" -->
-                         <li><a href="#jobs" id="jobs_tab" data-transition="none" data-icon="custom">Lediga jobb</a></li>
-                        <li><a href="#settings" id="settings_tab" data-transition="none" data-icon="custom">Inst&#228;llningar</a></li>
-                        <li><a href="#" id="info_tab" data-transition="none" data-icon="custom" class="ui-btn-active ui-state-persist">Om oss</a></li>
-                        <li><a href="#tips" id="tips_tab" data-transition="none" data-icon="custom">Tips</a></li>
+                         <li><a href="#jobs" id="jobs_tab" data-prefetch="true" data-transition="none" data-icon="custom">Lediga jobb</a></li>
+                        <li><a href="#settings" id="settings_tab" data-prefetch="true" data-transition="none" data-icon="custom">Inst&#228;llningar</a></li>
+                        <li><a href="#" id="info_tab" data-prefetch="true" data-transition="none" data-icon="custom" class="ui-btn-active ui-state-persist">Om oss</a></li>
+                        <li><a href="#tips" id="tips_tab" data-prefetch="true" data-transition="none" data-icon="custom">Tips</a></li>
                     </ul>
                 </div>
             </div><!-- /footer -->
@@ -276,10 +291,10 @@ $(document).ready(function(){
             </div><!-- /header -->
             
             <div data-role="content" class="wrapper" id="tips_content" data-iscroll>
+                <a data-role="button" data-icon="refresh" id="refresh_tips">Uppdatera</a>
                 <ul>
-
+                    <div id="tips_text"></div>
                 </ul>
-
             </div>
 
 
@@ -289,10 +304,10 @@ $(document).ready(function(){
                 <div data-role="navbar">
                     <ul>
                     <!-- For iOS add the following to each <a>-tag: data-transition="slide" data-direction="reverse" -->
-                        <li><a href="#jobs" id="jobs_tab" data-transition="none" data-icon="custom">Lediga jobb</a></li>
-                        <li><a href="#settings" id="settings_tab" data-transition="none" data-icon="custom">Inst&#228;llningar</a></li>
-                        <li><a href="#about" id="info_tab" data-transition="none" data-icon="custom">Om oss</a></li>
-                        <li><a href="#" id="tips_tab" data-transition="none" data-icon="custom" class="ui-btn-active ui-state-persist">Tips</a></li>
+                        <li><a href="#jobs" id="jobs_tab" data-prefetch="true" data-transition="none" data-icon="custom">Lediga jobb</a></li>
+                        <li><a href="#settings" id="settings_tab" data-prefetch="true" data-transition="none" data-icon="custom">Inst&#228;llningar</a></li>
+                        <li><a href="#about" id="info_tab" data-prefetch="true" data-transition="none" data-icon="custom">Om oss</a></li>
+                        <li><a href="#" id="tips_tab" data-prefetch="true" data-transition="none" data-icon="custom" class="ui-btn-active ui-state-persist">Tips</a></li>
                     </ul>
                 </div>
             </div><!-- /footer -->
@@ -307,22 +322,28 @@ $(document).ready(function(){
 
             <div data-role="content" class="wrapper" id="first_time_view_content" data-iscroll>
                 <ul>
-                    <div id="welcome">
-                        <h1>Välkommen till Skills app!</h1>
-                        <p>Här kan du hitta ditt nya drömjobb! Genom att tacka ja till Pushnotiser kan du snabbt upptäcka nya jobb som passar just dig!</p>
-                        <hr/>
+                    <div id="first_time_welcome">
+                        <h1>Välkommen till Skill!</h1>
+                        Skill är ett rekryterings- och undersökningsföretag som rekryterar till kvalificerade jobb och uppdrag på många spännande företag runt om i landet. Vi rekryterar både till tjänster som kräver många års arbetslivserfarenhet och tjänster för nyutexaminerade akademiker. 
+                        I den här appen kan du se och ansöka direkt till våra lediga tjänster. Du hittar även tips inför ditt jobbsökande och det finns möjlighet att kontakta någon av Skills rekryterare.
+                        
 
+                        <hr/>
+                        
+                        För att hålla dig uppdaterad på intressanta lediga tjänster så kan du välja här att ta emot pushnotiser. 
                         <label for="slider">Pushnotiser</label>
-                        <select name="slider" id="slider" data-role="slider">
-                        <option value="off">Av</option>
-                        <option value="on" selected>På</option>
-                        </select>
+                        <div class="slider_div">
+                            <select name="slider" id="welcome_slider" data-role="slider">
+                            <option value="off">Av</option>
+                            <option value="on" selected>På</option>
+                            </select>
+                        </div>
                         <br/>
-                        <img id="it-talang" src="css/images/dromkandidater.png"/>
+                       
                         <a data-role="button" data-theme="g" id="welcome_continue" class="continue_button"  data-inline="true">Fortsätt</a>
                     </div>
 
-                    <div id="placement">
+                    <div id="first_time_placement">
                         <fieldset data-role="controlgroup">
                             <legend>Placering: </legend>
                             <input type="checkbox" class="checkbox_group" name="checkbox-1a" id="checkbox-1a" value="Östergötlands län">
@@ -342,7 +363,7 @@ $(document).ready(function(){
                         <a data-role="button" data-theme="g" id="placement_continue" class="continue_button"  data-inline="true">Fortsätt</a>
                         </div>
                         
-                        <div id="area">
+                        <div id="first_time_area">
                         <fieldset data-role="controlgroup">
                             <legend>Område:</legend>
                             <input type="checkbox" class="checkbox_group" name="checkbox-1b" id="checkbox-1b" value="Marknad/kommunikation">
@@ -367,7 +388,7 @@ $(document).ready(function(){
                         </div>
                        
                     
-                        <div id="assignment_type">
+                        <div id="first_time_assignment_type">
                         <fieldset data-role="controlgroup">
                             <legend>Uppdragstyp:</legend>
                             <input type="checkbox" class="checkbox_group" name="checkbox-1c" id="checkbox-1c" value="Hyrrekrytering">
@@ -392,9 +413,13 @@ $(document).ready(function(){
         </div>
     <!-- FIRST TIME VIEW ENDS HERE -->
 
+
+
+        
+
         <script type="text/javascript">
             app.initialize();
         </script>
-        
+
     </body>
 </html>
